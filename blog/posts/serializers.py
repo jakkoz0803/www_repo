@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Category, Topic, Post
+from datetime import date
 
 # zad 4
 class CategorySerializer(serializers.Serializer):
@@ -28,4 +29,3 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'title', 'text', 'topic', 'slug', 'created_at', 'updated_at', 'created_by']
         read_only_fields = ['id', 'created_at', 'updated_at']
-

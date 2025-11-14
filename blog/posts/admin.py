@@ -25,11 +25,10 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'topic_with_category', 'created_by', 'created_at', 'updated_at']
     list_filter = ['topic__name', 'topic__category__name', 'created_by']
     search_fields = ['title', 'text']
-    readonly_fields = ['created_at']
+    # ⬇️ usuwamy readonly_fields, by można było testować walidację daty
     prepopulated_fields = {'slug': ('title',)}
     ordering = ['-created_at']
 
     @admin.display(description='Topic (Category)')
     def topic_with_category(self, obj):
         return f"{obj.topic.name} ({obj.topic.category.name})"
-
