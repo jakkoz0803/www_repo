@@ -29,3 +29,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['id', 'title', 'text', 'topic', 'slug', 'created_at', 'updated_at', 'created_by']
         read_only_fields = ['id', 'created_at', 'updated_at']
+        extra_kwargs = {
+            'created_by': {'required': False},
+        }
