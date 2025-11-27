@@ -7,9 +7,11 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Post
+from .models import Post, Category
 from .serializers import PostSerializer
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
 
 
 class PostList(APIView):
@@ -56,3 +58,14 @@ class PostDetail(APIView):
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+def category_secure_detail(request, pk):
+    if not request.user.has_perm('posts.view_category'):
+        raise PermissionDenied("Brak uprawnień do przeglądania kategorii")
+
+    try:
+        cat = Category.objects.get(pk=pk)
+    except Category.DoesNotExist:
+        return HttpResponse("Kategoria nie istnieje")
+
+    return HttpResponse(f"Kategoria: {cat.name}")

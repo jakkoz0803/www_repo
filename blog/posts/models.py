@@ -53,3 +53,6 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        permissions = [
+            ("can_edit_others_posts", "Może edytować cudze posty")
+        ]
